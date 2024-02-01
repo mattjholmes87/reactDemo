@@ -1,29 +1,36 @@
 import React, { Component } from "react";
-import "./App.scss";
+import axios from "axios";
+import Album from "./components/Album";
 
 class App extends Component {
-  state = { fontSize: 10 };
+  state = {};
+
+  async componentDidMount() {
+    const { data } = await axios.get(
+      "https://jsonplaceholder.typicode.com/photos"
+    );
+    data.length = 50;
+    this.setState({ album: data });
+  }
+
+  onDeleteItem = (id) => {
+    const album = [...this.state.album];
+    const index = album.findIndex((item) => item.id === id);
+    album.splice(index, 1);
+    this.setState({ album });
+  };
+
   render() {
+    if (!this.state.album) {
+      return <p>Loading ...</p>;
+    }
+
     return (
-      <div>
-        <p className="done">Hello World external style</p>
-        <p
-          style={{
-            backgroundColor: "red",
-            color: "white",
-            fontSize: `${this.state.fontSize}`,
-          }}
-        >
-          Hello World inline style
-          <button
-            onClick={() => {
-              this.setState({ fontSize: this.state.fontSize + 1 });
-            }}
-          >
-            +
-          </button>
-        </p>
-      </div>
+      <Album
+        album={this.state.album}
+        onDeleteItem={this.onDeleteItem}
+        index={this.index}
+      />
     );
   }
 }
