@@ -1,27 +1,31 @@
 import React, { Component } from "react";
-import Child from "./components/Child";
-import axios from "axios";
+import "./App.scss";
 
 class App extends Component {
-  state = { show: true };
-
+  state = { fontSize: 10 };
   render() {
     return (
-      <>
-        <button
-          onClick={() => {
-            this.setState({ show: !this.state.show });
+      <div>
+        <p className="done">Hello World external style</p>
+        <p
+          style={{
+            backgroundColor: "red",
+            color: "white",
+            fontSize: `${this.state.fontSize}`,
           }}
         >
-          Toggle
-        </button>
-        {this.state.show && (
-          <>
-            <Child />
-          </>
-        )}
-      </>
+          Hello World inline style
+          <button
+            onClick={() => {
+              this.setState({ fontSize: this.state.fontSize + 1 });
+            }}
+          >
+            +
+          </button>
+        </p>
+      </div>
     );
   }
 }
+
 export default App;
