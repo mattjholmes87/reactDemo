@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Interface from "./components/Interface";
+import axios from "axios";
 
 class App extends Component {
   state = {
@@ -9,7 +10,16 @@ class App extends Component {
       { title: "Buy Bread", done: true },
       { title: "Feed Fish", done: false },
     ],
+    character: [],
   };
+
+  async componentDidMount() {
+    const { data } = await axios.get(
+      "https://thesimpsonsquoteapi.glitch.me/quotes?count=15"
+    );
+
+    this.setState({ character: data });
+  }
 
   onTodoInput = (e) => {
     this.setState({ todoInput: e.target.value });
@@ -75,3 +85,25 @@ class App extends Component {
 }
 
 export default App;
+
+// state = {};
+// onDeleteItem = (id) => {
+//   const album = [...this.state.album];
+//   const index = album.findIndex((item) => item.id === id);
+//   album.splice(index, 1);
+//   this.setState({ album });
+// };
+
+// render() {
+//   if (!this.state.album) {
+//     return <p>Loading ...</p>;
+//   }
+
+//   return (
+//     <Album
+//       album={this.state.album}
+//       onDeleteItem={this.onDeleteItem}
+//       index={this.index}
+//     />
+//   );
+// }
