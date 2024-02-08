@@ -1,17 +1,25 @@
 import React, { Component } from "react";
-import Header from "./components/Header";
-import Main from "./components/Main";
-import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Error from "./pages/Error";
+import Nav from "./pages/Nav";
+import { Routes, Route } from "react-router-dom";
 
 const App = () => {
   return (
-    <div>
-      <Header />
-      <aside></aside>
-      <Main />
-      <Footer />
-    </div>
+    <>
+      <Nav />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="contact/:country" element={<Contact />} />
+        <Route path="*" element={<Error />} />
+      </Routes>
+    </>
   );
 };
 
 export default App;
+
+//* means anything
