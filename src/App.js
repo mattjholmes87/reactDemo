@@ -1,25 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Todo from "./components/Todo";
 
 const App = () => {
-  const [count, setCount] = useState(0);
+  const [todos, setTodos] = useState();
+  const getTodos = async () => {
+    const { data } = await axios.get(
+      `https://jsonplaceholder.typicode.com/todos`
+    );
 
+    setTodos(data);
+  };
+
+  useEffect(() => {
+    getTodos();
+  }, []);
+  console.log(todos);
   return (
     <>
-      <p>{count}</p>
-      <button
-        onClick={() => {
-          setCount(count + 1);
-        }}
-      >
-        Add
-      </button>
-      <button
-        onClick={() => {
-          setCount(count - 1);
-        }}
-      >
-        Delete
-      </button>
+      {todos &&
+        todos.map((todo) => {
+          return <Todo {...todo} />;
+        })}
     </>
   );
 };
