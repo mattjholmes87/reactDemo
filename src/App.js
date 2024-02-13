@@ -1,21 +1,26 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 
-//Calling a method on the DOM
 const App = () => {
-  const myRef = useRef();
+  const [count, setCount] = useState(0);
 
-  const onClick = () => {
-    myRef.current.focus();
-  };
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-    >
-      <input ref={myRef} type="text" id="demo" />
-      <button onClick={onClick}>Set Focus</button>
-    </form>
+    <>
+      <p>{count}</p>
+      <button
+        onClick={() => {
+          setCount(count + 1);
+        }}
+      >
+        Add
+      </button>
+      <button
+        onClick={() => {
+          setCount(count - 1);
+        }}
+      >
+        Delete
+      </button>
+    </>
   );
 };
 
